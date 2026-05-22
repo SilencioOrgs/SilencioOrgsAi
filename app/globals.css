@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f9f9ff;
+  --foreground: #141b2b;
+  --surface: #ffffff;
+  --surface-muted: #f1f3ff;
+  --surface-soft: #e9edff;
+  --surface-green: #dcfce7;
+  --primary: #007a32;
+  --primary-strong: #006b2c;
+  --primary-hover: #005320;
+  --secondary: #486554;
+  --muted: #3e4a3d;
+  --outline: #bdcaba;
+  --outline-soft: #e2e8de;
+  --warning-surface: #fff7d6;
+  --warning: #8a5b00;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-on-surface: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-green: var(--surface-green);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-outline: var(--outline);
+  --color-outline-soft: var(--outline-soft);
+  --color-warning-surface: var(--warning-surface);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-hanken);
+  --font-display: var(--font-poppins);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-hanken), Arial, Helvetica, sans-serif;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+::selection {
+  background: #caead6;
+  color: #002109;
+}
+
+.material-symbols-outlined {
+  direction: ltr;
+  display: inline-flex;
+  font-family: "Material Symbols Outlined";
+  font-feature-settings: "liga";
+  font-style: normal;
+  font-weight: normal;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.pb-safe {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+.dashboard-grid {
+  background-image:
+    linear-gradient(rgba(0, 122, 50, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 122, 50, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
