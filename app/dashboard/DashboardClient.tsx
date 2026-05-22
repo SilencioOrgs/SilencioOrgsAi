@@ -98,36 +98,74 @@ function PromptCard({
         <Tag prompt={prompt} />
       </header>
 
-      <div
-        className={`flex min-h-64 items-center justify-center border-b border-outline-soft p-5 sm:min-h-80 ${prompt.visual_class}`}
-      >
-        <div className="w-full max-w-sm rounded-xl border border-white/70 bg-white/70 p-5 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-white">
-                <Icon name={kind === "image" ? "image" : "movie"} size={23} />
-              </span>
-              <button
-                aria-label={`Download original for ${prompt.title}`}
-                className="grid h-11 w-11 place-items-center rounded-lg border border-white/80 bg-white/60 text-primary/70 transition hover:bg-white hover:text-primary"
-                title="Download original"
-                type="button"
-              >
-                <Icon name="download" size={21} />
-              </button>
-            </div>
-            <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-primary">
-              {prompt.category}
-            </span>
-          </div>
-          <p className="font-display text-xl font-extrabold text-on-surface">{prompt.visual_subtitle}</p>
-          <div className="mt-5 grid gap-2">
-            <span className="h-2 w-11/12 rounded-full bg-primary/25" />
-            <span className="h-2 w-8/12 rounded-full bg-primary/20" />
-            <span className="h-2 w-10/12 rounded-full bg-primary/15" />
+      {(prompt as Prompt & { image_url?: string | null }).image_url ? (
+        <div className="relative min-h-64 border-b border-outline-soft sm:min-h-80 group">
+          <img
+            src={(prompt as Prompt & { image_url?: string | null }).image_url!}
+            alt={prompt.title}
+            className="h-full w-full object-cover"
+            style={{ minHeight: "inherit" }}
+          />
+          <div className="absolute right-4 top-4 z-10">
+            <button
+              aria-label={`Download image for ${prompt.title}`}
+              className="grid h-11 w-11 place-items-center rounded-lg border border-white/80 bg-white/80 text-primary/80 transition hover:bg-white hover:text-primary shadow-sm backdrop-blur-sm"
+              title="Download image"
+              type="button"
+              onClick={async () => {
+                const url = (prompt as Prompt & { image_url?: string | null }).image_url!;
+                try {
+                  const res = await fetch(url);
+                  const blob = await res.blob();
+                  const blobUrl = window.URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = blobUrl;
+                  a.download = `${prompt.title.replace(/\s+/g, "_")}.jpg`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  window.URL.revokeObjectURL(blobUrl);
+                } catch (err) {
+                  console.error("Failed to download image", err);
+                }
+              }}
+            >
+              <Icon name="download" size={21} />
+            </button>
           </div>
         </div>
-      </div>
+      ) : (
+        <div
+          className={`flex min-h-64 items-center justify-center border-b border-outline-soft p-5 sm:min-h-80 ${prompt.visual_class}`}
+        >
+          <div className="w-full max-w-sm rounded-xl border border-white/70 bg-white/70 p-5 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-white">
+                  <Icon name={kind === "image" ? "image" : "movie"} size={23} />
+                </span>
+                <button
+                  aria-label={`Download original for ${prompt.title}`}
+                  className="grid h-11 w-11 place-items-center rounded-lg border border-white/80 bg-white/60 text-primary/70 transition hover:bg-white hover:text-primary"
+                  title="Download original"
+                  type="button"
+                >
+                  <Icon name="download" size={21} />
+                </button>
+              </div>
+              <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-primary">
+                {prompt.category}
+              </span>
+            </div>
+            <p className="font-display text-xl font-extrabold text-on-surface">{prompt.visual_subtitle}</p>
+            <div className="mt-5 grid gap-2">
+              <span className="h-2 w-11/12 rounded-full bg-primary/25" />
+              <span className="h-2 w-8/12 rounded-full bg-primary/20" />
+              <span className="h-2 w-10/12 rounded-full bg-primary/15" />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="bg-background p-4 sm:p-6">
         <div className="mb-4 flex flex-wrap gap-2">
