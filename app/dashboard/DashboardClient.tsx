@@ -3,25 +3,10 @@
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { Icon } from "../components/Icon";
+import type { Prompt } from "../../lib/types";
 
 type PromptKind = "image" | "video";
 type PromptMode = "background" | "product" | "persona";
-
-type Prompt = {
-  author: string;
-  category: string;
-  id: string;
-  imagePrompts: Record<PromptMode, string>;
-  order: number;
-  tag: string;
-  tagIcon: string;
-  tagTone: "green" | "yellow";
-  time: string;
-  title: string;
-  videoPrompts: Record<PromptMode, string>;
-  visualClass: string;
-  visualSubtitle: string;
-};
 
 const categories = [
   { icon: "widgets", name: "All" },
@@ -42,163 +27,26 @@ const promptModes: Array<{
   { icon: "person_edit", label: "Change Persona Prompt", value: "persona" },
 ];
 
-const prompts: Prompt[] = [
-  {
-    author: "@silencioorgs",
-    category: "Fashion",
-    id: "fashion-drop",
-    imagePrompts: {
-      background:
-        "Change the background to a cozy bedroom with warm natural daylight, aesthetic wall decor, clean creator-style framing, TikTok-ready lifestyle mood, ultra-realistic, 4K.",
-      product:
-        "Change the product to a white oversized raglan shirt with brown sleeves, clearly visible fabric texture, flattering fit, affiliate product focus, ultra-realistic TikTok product image.",
-      persona:
-        "Change the persona to a stylish young creator with relaxed confidence, candid pose, soft expression, modern TikTok fashion energy, natural daylight, ultra-realistic.",
-    },
-    order: 1,
-    tag: "Trending",
-    tagIcon: "trending_up",
-    tagTone: "green",
-    time: "2h ago",
-    title: "Fashion Drop",
-    videoPrompts: {
-      background:
-        "Change the video background to a cozy bedroom scene. Start with warm daylight on the wall decor, pan to the creator, then keep the room softly visible through the outfit reveal.",
-      product:
-        "Change the video product focus to the white oversized raglan shirt. Open on fabric texture, cut to sleeve detail, show the full fit, then end with a clear affiliate CTA.",
-      persona:
-        "Change the video persona to a stylish young creator. Use relaxed mirror-check energy, confident natural movement, quick outfit poses, and a friendly direct-to-camera CTA.",
-    },
-    visualClass: "bg-[#e4f6ea]",
-    visualSubtitle: "Soft daylight outfit demo",
-  },
-  {
-    author: "@silencioorgs",
-    category: "Beauty",
-    id: "beauty-pick",
-    imagePrompts: {
-      background:
-        "Change the background to a minimalist white beauty counter with soft ring light glow, luxury skincare atmosphere, clean TikTok unboxing composition, photorealistic, ultra-HD.",
-      product:
-        "Change the product to a glowy serum bottle with dropper, premium glass packaging, dewy liquid texture, label facing camera, luxury skincare affiliate focus, photorealistic.",
-      persona:
-        "Change the persona to a beauty creator with dewy skin applying serum gently, confident calm expression, close-up framing, soft flattering light, TikTok beauty review style.",
-    },
-    order: 2,
-    tag: "Hot",
-    tagIcon: "local_fire_department",
-    tagTone: "yellow",
-    time: "5h ago",
-    title: "Beauty Pick",
-    videoPrompts: {
-      background:
-        "Change the video background to a minimalist beauty counter with soft ring light. Begin with the clean setup, keep the white space premium, and use gentle close-up transitions.",
-      product:
-        "Change the video product focus to the glowy serum bottle. Start with the dropper texture, show one cheek application, reveal the finish, then close with a benefit-led CTA.",
-      persona:
-        "Change the video persona to a beauty creator with calm confident delivery. Use close-up application, natural facial reactions, and a soft spoken product recommendation.",
-    },
-    visualClass: "bg-[#eef1fb]",
-    visualSubtitle: "Ring light skincare close-up",
-  },
-  {
-    author: "@silencioorgs",
-    category: "Home",
-    id: "home-find",
-    imagePrompts: {
-      background:
-        "Change the background to a bright modern kitchen with a clean counter, soft morning light, neutral home decor, satisfying organized lifestyle mood, realistic TikTok review style.",
-      product:
-        "Change the product to a compact kitchen organizer with visible compartments, tidy storage details, clean edges, practical affiliate product focus, realistic product review style.",
-      persona:
-        "Change the persona to a home creator demonstrating an organized counter setup, approachable expression, hands interacting with the product, bright realistic TikTok style.",
-    },
-    order: 3,
-    tag: "New",
-    tagIcon: "fiber_new",
-    tagTone: "green",
-    time: "8h ago",
-    title: "Home Find",
-    videoPrompts: {
-      background:
-        "Change the video background to a bright modern kitchen. Start on the messy counter, snap to the clean organized surface, and keep the neutral home setting visible.",
-      product:
-        "Change the video product focus to the compact kitchen organizer. Demonstrate three compartments, show before-and-after storage, then close with a practical value CTA.",
-      persona:
-        "Change the video persona to an approachable home creator. Use hands-on demo shots, quick organizing gestures, and a friendly voiceover explaining why the product helps.",
-    },
-    visualClass: "bg-[#f1f3ff]",
-    visualSubtitle: "Clean home product setup",
-  },
-  {
-    author: "@silencioorgs",
-    category: "Tech",
-    id: "tech-desk",
-    imagePrompts: {
-      background:
-        "Change the background to a minimalist workstation with laptop, soft daylight, crisp desk shadows, clean cable-free setup, premium creator-shot tech review composition.",
-      product:
-        "Change the product to a sleek desk gadget centered in frame, premium matte finish, clear functional details, sharp product lighting, photorealistic affiliate tech review style.",
-      persona:
-        "Change the persona to a tech creator at a clean workstation, focused but approachable expression, hands setting up the gadget, premium short-form review aesthetic.",
-    },
-    order: 4,
-    tag: "Trending",
-    tagIcon: "trending_up",
-    tagTone: "green",
-    time: "11h ago",
-    title: "Tech Desk",
-    videoPrompts: {
-      background:
-        "Change the video background to a minimalist workstation. Start with a clean desk establishing shot, keep laptop and daylight in frame, and use crisp tech-review cuts.",
-      product:
-        "Change the video product focus to the sleek desk gadget. Introduce it in one clean motion, show the setup result, highlight one key feature, and end with the pinned-link CTA.",
-      persona:
-        "Change the video persona to a focused tech creator. Use calm expert delivery, hands setting up the gadget, a quick reaction shot, and a concise recommendation.",
-    },
-    visualClass: "bg-[#e9edff]",
-    visualSubtitle: "Minimal creator workstation",
-  },
-  {
-    author: "@silencioorgs",
-    category: "Fitness",
-    id: "fitness-kit",
-    imagePrompts: {
-      background:
-        "Change the background to a bright home workout studio corner with clean floor space, water bottle and towel nearby, energetic wellness mood, realistic short-form ad look.",
-      product:
-        "Change the product to portable resistance bands arranged neatly, clear colors and handles, compact storage visible, clean affiliate product placement, realistic fitness ad style.",
-      persona:
-        "Change the persona to a fitness creator preparing for a quick home workout, upbeat expression, athletic casual outfit, natural movement, realistic TikTok wellness style.",
-    },
-    order: 5,
-    tag: "Fresh",
-    tagIcon: "bolt",
-    tagTone: "green",
-    time: "1d ago",
-    title: "Fitness Kit",
-    videoPrompts: {
-      background:
-        "Change the video background to a bright home workout corner. Open with the clean studio setup, keep towel and water bottle visible, and use energetic short-form pacing.",
-      product:
-        "Change the video product focus to portable resistance bands. Show the kit unpacked in one second, demonstrate two simple moves, show compact storage, and end with an upbeat CTA.",
-      persona:
-        "Change the video persona to an upbeat fitness creator. Use confident warm-up energy, natural movement, quick exercise demos, and a motivating affiliate CTA.",
-    },
-    visualClass: "bg-[#e7f7ec]",
-    visualSubtitle: "Bright home workout setup",
-  },
-];
+function getPromptContent(
+  prompt: Prompt,
+  kind: PromptKind,
+  mode: PromptMode,
+): string {
+  const match = prompt.prompt_modes.find(
+    (pm) => pm.kind === kind && pm.mode === mode,
+  );
+  return match?.content ?? "";
+}
 
 function Tag({ prompt }: { prompt: Prompt }) {
   const className =
-    prompt.tagTone === "yellow"
+    prompt.tag_tone === "yellow"
       ? "border border-yellow-200 bg-warning-surface text-warning"
       : "bg-surface-green text-primary";
 
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold ${className}`}>
-      <Icon name={prompt.tagIcon} size={14} filled />
+      <Icon name={prompt.tag_icon} size={14} filled />
       {prompt.tag}
     </span>
   );
@@ -225,8 +73,8 @@ function PromptCard({
   prompt: Prompt;
   videoMode: PromptMode;
 }) {
-  const currentImagePrompt = prompt.imagePrompts[imageMode];
-  const currentVideoPrompt = prompt.videoPrompts[videoMode];
+  const currentImagePrompt = getPromptContent(prompt, "image", imageMode);
+  const currentVideoPrompt = getPromptContent(prompt, "video", videoMode);
   const activeMode = kind === "image" ? imageMode : videoMode;
   const promptText = kind === "image" ? currentImagePrompt : currentVideoPrompt;
   const selectedPromptMode = promptModes.find((mode) => mode.value === activeMode) ?? promptModes[0];
@@ -243,7 +91,7 @@ function PromptCard({
           <div className="min-w-0">
             <h3 className="truncate text-sm font-extrabold text-on-surface">{prompt.author}</h3>
             <p className="truncate text-sm text-muted">
-              {prompt.title} - {prompt.time}
+              {prompt.title} - {prompt.time_label}
             </p>
           </div>
         </div>
@@ -251,7 +99,7 @@ function PromptCard({
       </header>
 
       <div
-        className={`flex min-h-64 items-center justify-center border-b border-outline-soft p-5 sm:min-h-80 ${prompt.visualClass}`}
+        className={`flex min-h-64 items-center justify-center border-b border-outline-soft p-5 sm:min-h-80 ${prompt.visual_class}`}
       >
         <div className="w-full max-w-sm rounded-xl border border-white/70 bg-white/70 p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
@@ -272,7 +120,7 @@ function PromptCard({
               {prompt.category}
             </span>
           </div>
-          <p className="font-display text-xl font-extrabold text-on-surface">{prompt.visualSubtitle}</p>
+          <p className="font-display text-xl font-extrabold text-on-surface">{prompt.visual_subtitle}</p>
           <div className="mt-5 grid gap-2">
             <span className="h-2 w-11/12 rounded-full bg-primary/25" />
             <span className="h-2 w-8/12 rounded-full bg-primary/20" />
@@ -377,7 +225,7 @@ function PromptCard({
   );
 }
 
-export function DashboardClient() {
+export function DashboardClient({ prompts }: { prompts: Prompt[] }) {
   const categoryRailRef = useRef<HTMLDivElement>(null);
   const [activeCategory, setActiveCategory] = useState("All");
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -409,8 +257,7 @@ export function DashboardClient() {
           [
             prompt.title,
             prompt.category,
-            ...Object.values(prompt.imagePrompts),
-            ...Object.values(prompt.videoPrompts),
+            ...prompt.prompt_modes.map((pm) => pm.content),
           ]
             .join(" ")
             .toLowerCase()
@@ -418,8 +265,8 @@ export function DashboardClient() {
 
         return categoryMatch && queryMatch;
       })
-      .sort((firstPrompt, secondPrompt) => firstPrompt.order - secondPrompt.order);
-  }, [activeCategory, query]);
+      .sort((firstPrompt, secondPrompt) => firstPrompt.order_index - secondPrompt.order_index);
+  }, [activeCategory, query, prompts]);
 
   function resetExplore() {
     setActiveCategory("All");
