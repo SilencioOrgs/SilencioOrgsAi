@@ -1,382 +1,519 @@
 import Link from "next/link";
 import { Icon } from "./components/Icon";
 
-const services = [
+/* ─── Data ─────────────────────────────────────────────────── */
+
+const steps = [
   {
-    icon: "psychology",
-    title: "AI Prompt Generation",
-    body: "One-tap prompts tailored for TikTok product videos, reviews, and affiliate showcases.",
+    icon: "cloud_upload",
+    title: "Upload Your Product Photo",
+    body: "Snap or upload any product image — our AI handles the rest automatically.",
   },
   {
-    icon: "movie_edit",
-    title: "Video Script Templates",
-    body: "Ready-to-use scripts tuned for hooks, CTAs, product demos, and short-form transitions.",
+    icon: "auto_awesome",
+    title: "AI Analyzes & Crafts Prompt",
+    body: "Gemini AI studies your product, lighting, and style to build a cinema-grade prompt.",
   },
   {
-    icon: "imagesmode",
-    title: "Affiliate Image Prompts",
-    body: "Curated image prompts for product visuals, lifestyle scenes, and creator-ready shots.",
+    icon: "content_copy",
+    title: "Copy & Paste Into Any AI Tool",
+    body: "Paste your prompt into Sora, Kling, Luma, Runway Gen-3, or Pika and generate.",
   },
 ];
 
-const reasons = [
+const features = [
   {
-    icon: "diamond",
-    title: "Bespoke Prompt Packs",
-    body: "Prompt collections organized by niche, offer type, and TikTok buying intent.",
+    icon: "movie_edit",
+    title: "Cinematic Video Prompts",
+    body: "UHD 4K, 60FPS, bokeh, handheld camera movement — every detail described automatically.",
+    accent: "from-emerald-500/10 to-green-400/5",
   },
   {
-    icon: "support_agent",
-    title: "Creator Support",
-    body: "Simple guidance for choosing prompts, adapting hooks, and shipping content faster.",
+    icon: "imagesmode",
+    title: "Product Image Prompts",
+    body: "Luxury editorial, studio, lifestyle — AI-tuned prompts for jaw-dropping product visuals.",
+    accent: "from-teal-500/10 to-emerald-400/5",
   },
   {
-    icon: "lock",
-    title: "Instant Access",
-    body: "A front-end prompt vault experience built for quick browsing, copying, and testing.",
+    icon: "bolt",
+    title: "Instant TikTok Content",
+    body: "Ready-to-use scripts and hooks optimized for affiliate videos and TikTok Shop creators.",
+    accent: "from-green-400/10 to-teal-400/5",
   },
+  {
+    icon: "psychology",
+    title: "Gemini AI Powered",
+    body: "Google's most advanced multimodal AI reads your image and generates elite-level prompts.",
+    accent: "from-emerald-600/10 to-green-500/5",
+  },
+];
+
+const tools = [
+  "Sora",
+  "Kling AI",
+  "Luma Dream Machine",
+  "Runway Gen-3",
+  "Pika Labs",
+  "MidJourney",
+  "DALL-E 3",
 ];
 
 const testimonials = [
   {
     name: "Errandeo Services",
+    role: "TikTok Affiliate Creator",
     quote:
-      "Silencio Orgs changed how we create TikTok content. The prompts are specific, ready to use, and helped us publish faster.",
+      "I uploaded one photo and got a prompt that produced a cinematic video I never could have written myself. This is insane.",
+    stars: 5,
   },
   {
     name: "Sandrine Logistics",
+    role: "E-commerce Brand",
     quote:
-      "We used to spend hours writing scripts. Now we start from a prompt and get product videos ready in minutes.",
+      "We used to spend hours writing prompts. Now we snap a photo, copy the output, and our product video is done in minutes.",
+    stars: 5,
   },
   {
     name: "Haligi Realty",
+    role: "Content Creator",
     quote:
-      "The prompt structure helped us showcase offers in a way that is clearer, faster, and easier to repeat.",
+      "The quality of prompts is unlike anything I have used before. Cinematic, detailed, and actually works on first try.",
+    stars: 5,
   },
 ];
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/dashboard", label: "Prompts" },
-  { href: "#solutions", label: "Solutions" },
-  { href: "#why-us", label: "About Us" },
-  { href: "#contact", label: "Contact" },
-];
+/* ─── Components ──────────────────────────────────────────── */
 
-function Brand() {
+function NavBar() {
   return (
-    <Link className="flex items-center gap-3" href="/" aria-label="Silencio Orgs home">
-      <span className="grid h-9 w-9 place-items-center rounded-lg bg-surface-green text-primary">
-        <Icon name="auto_awesome" size={22} filled />
-      </span>
-      <span className="font-display text-lg font-bold text-on-surface sm:text-xl">Silencio Orgs</span>
-    </Link>
-  );
-}
+    <header className="sticky top-0 z-50 border-b border-outline-soft bg-surface/90 backdrop-blur-md">
+      <div className="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-4 sm:px-6">
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Silencio Orgs home">
+          <img src="/assets/logo.png" alt="Silencio Orgs Logo" className="h-9 w-9 object-contain" />
+          <span className="font-display text-lg font-extrabold text-on-surface">Silencio Orgs</span>
+        </Link>
 
-function Header() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-outline-soft bg-surface/95 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 py-4 sm:px-8">
-        <Brand />
-
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary navigation">
-          {navItems.map((item) => (
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
+          {[
+            { href: "#how-it-works", label: "How It Works" },
+            { href: "#features", label: "Features" },
+            { href: "#demo", label: "Demo" },
+            { href: "/generate", label: "Prompts" },
+          ].map((item) => (
             <Link
               key={item.label}
-              className="border-b-2 border-transparent pb-1 text-sm font-semibold text-muted transition-colors hover:border-primary hover:text-primary"
               href={item.href}
+              className="text-sm font-semibold text-muted transition-colors hover:text-primary"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        {/* CTA */}
+        <div className="flex items-center gap-3">
           <Link
-            href="/dashboard"
-            className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-sm transition hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98]"
+            href="/generate"
+            className="hidden h-10 items-center gap-2 rounded-xl border border-primary px-4 text-sm font-bold text-primary transition hover:bg-surface-green md:inline-flex"
           >
-            <Icon name="content_copy" size={18} />
-            Copy Prompts Now
+            Try Free
+          </Link>
+          <Link
+            href="/generate"
+            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-white shadow-sm transition hover:bg-primary-hover active:scale-[0.98]"
+          >
+            <Icon name="content_copy" size={16} />
+            <span className="hidden sm:inline">Browse Prompts</span>
+            <span className="sm:hidden">Prompts</span>
           </Link>
         </div>
-
-        <details className="group relative md:hidden">
-          <summary className="grid h-11 w-11 cursor-pointer list-none place-items-center rounded-lg border border-outline-soft bg-surface text-muted transition hover:border-primary hover:text-primary [&::-webkit-details-marker]:hidden">
-            <span className="sr-only">Open navigation</span>
-            <Icon name="menu" size={24} />
-          </summary>
-          <div className="absolute right-0 mt-3 w-64 rounded-lg border border-outline-soft bg-surface p-3 shadow-xl">
-            <nav className="grid gap-1" aria-label="Mobile navigation">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  className="rounded-lg px-3 py-3 text-sm font-semibold text-muted transition hover:bg-surface-muted hover:text-primary"
-                  href={item.href}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white"
-                href="/dashboard"
-              >
-                <Icon name="content_copy" size={18} />
-                Copy Prompts Now
-              </Link>
-            </nav>
-          </div>
-        </details>
       </div>
     </header>
   );
 }
 
-function HeroPreview() {
+function StarRating({ count }: { count: number }) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-[#b8d9c0] bg-surface-green p-4 shadow-sm sm:p-6">
-      <div className="dashboard-grid absolute inset-0 opacity-70" />
-      <div className="relative mx-auto max-w-md rounded-lg border border-outline-soft bg-surface p-4 shadow-sm sm:p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-sm font-bold text-white">
-              SO
-            </span>
-            <div>
-              <p className="text-sm font-bold text-on-surface">@silencioorgs</p>
-              <p className="text-xs text-muted">Fashion Drop - 2h ago</p>
-            </div>
-          </div>
-          <span className="inline-flex items-center gap-1 rounded-full bg-surface-green px-3 py-1 text-xs font-bold text-primary">
-            <Icon name="trending_up" size={14} filled />
-            Trending
-          </span>
-        </div>
-        <div className="mb-4 min-h-40 rounded-lg border border-outline-soft bg-[#eaf8ef] p-4">
-          <div className="flex h-32 flex-col justify-end rounded-lg bg-white/60 p-4">
-            <span className="mb-2 h-2 w-24 rounded-full bg-primary/40" />
-            <span className="mb-2 h-2 w-40 rounded-full bg-primary/25" />
-            <span className="h-2 w-32 rounded-full bg-primary/20" />
-          </div>
-        </div>
-        <div className="rounded-lg border border-outline-soft bg-surface-muted p-4">
-          <p className="text-sm leading-6 text-on-surface">
-            Create a candid TikTok product scene with natural light, strong hook framing, and a
-            creator-ready visual style.
-          </p>
-        </div>
-        <div className="mt-4 flex items-center justify-between text-sm text-muted">
-          <span className="text-sm font-bold text-primary">Guest preview</span>
-          <span className="inline-flex items-center gap-2 rounded-lg bg-primary px-3 py-2 font-bold text-white">
-            <Icon name="content_copy" size={16} />
-            Copy
-          </span>
-        </div>
-      </div>
+    <div className="flex items-center gap-0.5">
+      {Array.from({ length: count }).map((_, i) => (
+        <Icon key={i} name="star" size={14} className="text-amber-400" filled />
+      ))}
     </div>
   );
 }
 
-function SectionHeading({ kicker, title }: { kicker?: string; title: string }) {
-  return (
-    <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
-      {kicker ? <p className="mb-3 text-sm font-bold uppercase text-primary">{kicker}</p> : null}
-      <h2 className="font-display text-3xl font-extrabold leading-tight text-on-surface sm:text-4xl">
-        {title}
-      </h2>
-      <span className="mx-auto mt-5 block h-1 w-16 rounded-full bg-primary" />
-    </div>
-  );
-}
+/* ─── Page ────────────────────────────────────────────────── */
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-surface text-on-surface">
-      <Header />
+    <div className="min-h-screen bg-background text-on-surface">
+      <NavBar />
 
       <main>
-        <section className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-16">
-          <div className="max-w-2xl">
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-outline-soft bg-surface-green px-4 py-2 text-sm font-bold text-primary">
-              <Icon name="bolt" size={17} filled />
-              Built for TikTok AI affiliates
-            </p>
-            <h1 className="font-display text-4xl font-extrabold leading-[1.08] text-on-surface sm:text-5xl lg:text-6xl">
-              Made for <span className="text-primary">TikTok AI</span> Affiliates
+        {/* ═══════════════════════════════════════════════════
+            HERO
+        ═══════════════════════════════════════════════════ */}
+        <section className="relative overflow-hidden">
+          {/* Glow backdrop */}
+          <div className="hero-glow pointer-events-none absolute inset-0" />
+          {/* Grid pattern */}
+          <div className="dashboard-grid pointer-events-none absolute inset-0 opacity-30" />
+
+          <div className="relative mx-auto w-full max-w-[1200px] px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:pb-28 lg:pt-24">
+            {/* Badge */}
+            <div className="animate-fade-up flex justify-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-surface-green px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+                Powered by Google Gemini AI · Free to Try
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="animate-fade-up-2 mx-auto mt-6 max-w-3xl text-center font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-on-surface sm:text-5xl lg:text-6xl">
+              Turn Any Product Photo Into a{" "}
+              <span className="text-shimmer">Cinema-Grade</span>
+              {" "}Video Prompt
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
-              Copy, paste, and create. Ready-to-use prompts for AI image and video generation,
-              shaped for creators who need affiliate content fast.
+
+            {/* Sub */}
+            <p className="animate-fade-up-3 mx-auto mt-5 max-w-xl text-center text-base leading-7 text-muted sm:text-lg sm:leading-8">
+              Upload your product image. Gemini AI generates the perfect prompt.
+              Paste it into Sora, Kling, or Runway and get a stunning video — instantly.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+
+            {/* CTA Buttons */}
+            <div className="animate-fade-up-4 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/dashboard"
-                className="inline-flex h-[52px] items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white shadow-sm transition hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98]"
+                href="/generate"
+                className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-8 text-base font-extrabold text-white shadow-lg shadow-primary/25 transition hover:bg-primary-hover active:scale-[0.98] sm:w-auto"
+                style={{ height: 52 }}
               >
-                <Icon name="content_copy" size={20} />
-                Copy Prompts Now
+                <Icon name="auto_awesome" size={20} filled />
+                Generate My Prompt — Free
               </Link>
               <Link
-                href="/dashboard"
-                className="inline-flex h-[52px] items-center justify-center gap-2 rounded-lg border border-primary px-6 text-base font-bold text-primary transition hover:bg-surface-green focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98]"
+                href="/generate"
+                className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl border border-outline bg-surface px-8 text-base font-bold text-muted transition hover:border-primary hover:text-primary sm:w-auto"
+                style={{ height: 52 }}
               >
-                <Icon name="explore" size={20} />
-                View Dashboard
+                <Icon name="storefront" size={20} />
+                Browse Prompt Library
               </Link>
             </div>
-          </div>
 
-          <HeroPreview />
-        </section>
+            {/* Trust strip */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-muted">
+              {["No sign-up required", "100% free to try", "Works with 7+ AI video tools"].map((item) => (
+                <span key={item} className="flex items-center gap-1.5">
+                  <Icon name="check_circle" size={14} className="text-primary" filled />
+                  {item}
+                </span>
+              ))}
+            </div>
 
-        <section id="solutions" className="bg-surface-muted py-16 md:py-24">
-          <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:items-center lg:gap-16">
-            <div className="overflow-hidden rounded-xl border border-outline-soft bg-surface-green p-4">
-              <div className="aspect-video rounded-lg border border-[#b8d9c0] bg-surface/65 p-5">
-                <div className="flex h-full flex-col justify-between">
+            {/* ── Hero Video Showcase ── */}
+            <div id="demo" className="mt-14 sm:mt-16">
+              <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-outline bg-[#0a0f1a] shadow-2xl card-glow">
+                {/* Frame header */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/8 px-4 py-3 sm:px-5">
                   <div className="flex items-center gap-3">
-                    <span className="grid h-11 w-11 place-items-center rounded-lg bg-primary text-white">
-                      <Icon name="smart_display" size={24} />
-                    </span>
-                    <div className="h-3 w-32 rounded-full bg-primary/35" />
+                    {/* Mac-style dots */}
+                    <div className="flex gap-1.5">
+                      <span className="h-3 w-3 rounded-full bg-red-400/70" />
+                      <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
+                      <span className="h-3 w-3 rounded-full bg-green-400/70" />
+                    </div>
+                    <span className="text-xs font-bold text-white/40">silencioorgs.com / generate</span>
                   </div>
-                  <div className="grid gap-3">
-                    <span className="h-3 w-5/6 rounded-full bg-primary/30" />
-                    <span className="h-3 w-2/3 rounded-full bg-primary/20" />
-                    <span className="h-3 w-4/5 rounded-full bg-primary/25" />
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+                      Live Result
+                    </span>
+                  </div>
+                </div>
+
+                {/* GIF */}
+                <div className="relative">
+                  <img
+                    src="/products/Ultra_realistic_cinematic_nighttime_product_s.gif"
+                    alt="Ultra-realistic cinematic nighttime product showcase — generated by AI prompt"
+                    className="w-full object-cover"
+                    style={{ maxHeight: 480 }}
+                  />
+                  {/* Overlay gradient at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0a0f1a] to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                    <div>
+                      <p className="text-xs font-bold text-white/60">Prompt used →</p>
+                      <p className="mt-0.5 max-w-xs truncate text-xs text-white/40">
+                        Ultra realistic cinematic nighttime product showcase…
+                      </p>
+                    </div>
+                    <span className="shrink-0 rounded bg-black/50 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white/70 backdrop-blur-sm">
+                      GIF Preview
+                    </span>
+                  </div>
+                </div>
+
+                {/* Prompt strip */}
+                <div className="border-t border-white/8 px-4 py-4 sm:px-5">
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary/20 text-primary">
+                      <Icon name="auto_awesome" size={16} filled />
+                    </div>
+                    <p className="flex-1 truncate text-xs leading-relaxed text-white/50">
+                      Ultra realistic cinematic nighttime product showcase · UHD 4K · 60FPS · iPhone 15 Pro · urban bokeh · premium skincare commercial aesthetic…
+                    </p>
+                    <Link
+                      href="/generate"
+                      className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-extrabold text-white transition hover:bg-primary-hover"
+                    >
+                      <Icon name="add_photo_alternate" size={14} />
+                      Try with your product
+                    </Link>
                   </div>
                 </div>
               </div>
+
+              {/* Disclaimer */}
+              <p className="mt-3 text-center text-xs text-muted">
+                ✨ This GIF shows the visual target standard. Results vary by AI video tool chosen.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+            HOW IT WORKS
+        ═══════════════════════════════════════════════════ */}
+        <section id="how-it-works" className="border-y border-outline-soft bg-surface-muted py-16 sm:py-20 lg:py-24">
+          <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+            <div className="mx-auto mb-12 max-w-xl text-center">
+              <p className="mb-2 text-xs font-extrabold uppercase tracking-widest text-primary">How It Works</p>
+              <h2 className="font-display text-3xl font-extrabold text-on-surface sm:text-4xl">
+                From photo to viral video in{" "}
+                <span className="text-primary">3 steps</span>
+              </h2>
             </div>
 
-            <div>
-              <h2 className="font-display text-3xl font-extrabold leading-tight text-on-surface sm:text-4xl lg:text-5xl">
-                Custom Prompt Solutions? <span className="text-primary">Count on us.</span>
-              </h2>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
-                We curate AI prompts built for TikTok creators and affiliates. Product showcases,
-                lifestyle scripts, short-form scenes, and content templates are ready when you are.
-              </p>
+            <div className="mx-auto max-w-lg space-y-0">
+              {steps.map((step, i) => (
+                <div
+                  key={step.title}
+                  className={`relative flex gap-5 pb-8 ${i < steps.length - 1 ? "step-connector" : ""}`}
+                >
+                  {/* Circle + icon */}
+                  <div className="shrink-0">
+                    <div className="relative grid h-10 w-10 place-items-center rounded-full border-2 border-primary bg-surface text-primary shadow-sm">
+                      <Icon name={step.icon} size={19} filled />
+                    </div>
+                  </div>
+                  {/* Text */}
+                  <div className="pt-1">
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest text-primary">Step {i + 1}</p>
+                    <h3 className="mt-1 font-display text-base font-extrabold text-on-surface sm:text-lg">
+                      {step.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-6 text-muted">{step.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mini CTA */}
+            <div className="mt-10 flex justify-center">
               <Link
-                href="/dashboard"
-                className="mt-8 inline-flex h-12 items-center justify-center rounded-lg border border-primary px-6 font-bold text-primary transition hover:bg-surface-green focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-[0.98]"
+                href="/generate"
+                className="inline-flex h-12 items-center gap-2 rounded-2xl bg-primary px-7 text-sm font-extrabold text-white shadow-md shadow-primary/20 transition hover:bg-primary-hover active:scale-[0.98]"
               >
-                Learn More
+                <Icon name="auto_awesome" size={18} filled />
+                Start With Your Product Photo
               </Link>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 md:py-24">
-          <SectionHeading title="What We Can Do For You" />
-          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-            {services.map((service) => (
-              <article
-                key={service.title}
-                className="rounded-lg border border-outline-soft bg-surface p-6 text-center shadow-sm transition hover:border-[#b8d9c0] hover:shadow-md sm:p-8"
-              >
-                <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-lg bg-surface-green text-primary">
-                  <Icon name={service.icon} size={30} />
-                </div>
-                <h3 className="font-display text-lg font-bold text-on-surface">{service.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted">{service.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* ═══════════════════════════════════════════════════
+            FEATURES
+        ═══════════════════════════════════════════════════ */}
+        <section id="features" className="py-16 sm:py-20 lg:py-24">
+          <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+            <div className="mx-auto mb-12 max-w-xl text-center">
+              <p className="mb-2 text-xs font-extrabold uppercase tracking-widest text-primary">Features</p>
+              <h2 className="font-display text-3xl font-extrabold text-on-surface sm:text-4xl">
+                Everything you need to create{" "}
+                <span className="text-primary">premium content</span>
+              </h2>
+            </div>
 
-        <section id="why-us" className="bg-surface-muted py-16 md:py-24">
-          <div className="mx-auto w-full max-w-[1280px] px-5 sm:px-8">
-            <SectionHeading title="Why Us" />
-            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-              {reasons.map((reason) => (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {features.map((feat) => (
                 <article
-                  key={reason.title}
-                  className="rounded-lg border border-outline-soft bg-surface p-6 text-center shadow-sm sm:p-8"
+                  key={feat.title}
+                  className={`group relative overflow-hidden rounded-2xl border border-outline-soft bg-gradient-to-br ${feat.accent} p-5 transition hover:border-primary hover:shadow-lg sm:p-6`}
                 >
-                  <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-surface-green text-primary">
-                    <Icon name={reason.icon} size={26} />
+                  <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl border border-outline-soft bg-surface text-primary shadow-sm transition group-hover:bg-surface-green group-hover:border-primary/20">
+                    <Icon name={feat.icon} size={24} filled />
                   </div>
-                  <h3 className="font-display text-lg font-bold text-on-surface">{reason.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{reason.body}</p>
+                  <h3 className="font-display text-sm font-extrabold text-on-surface sm:text-base">{feat.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">{feat.body}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-primary px-5 py-16 text-center text-white md:py-24">
-          <div className="mx-auto max-w-4xl">
-            <Icon name="format_quote" size={56} className="mx-auto mb-6 text-white/65" />
-            <p className="font-display text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
-              The fastest way to create scroll-stopping TikTok content: copy, paste, and grow.
+        {/* ═══════════════════════════════════════════════════
+            COMPATIBLE TOOLS
+        ═══════════════════════════════════════════════════ */}
+        <section className="border-y border-outline-soft bg-surface py-12">
+          <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+            <p className="mb-6 text-center text-xs font-extrabold uppercase tracking-widest text-muted">
+              Works seamlessly with
             </p>
-            <div className="mx-auto mt-8 h-1 w-16 rounded-full bg-white/35" />
-            <p className="mt-6 text-sm font-bold uppercase text-white/90">
-              Silencio Orgs, built for creators
-            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="rounded-full border border-outline-soft bg-surface-muted px-4 py-2 text-sm font-bold text-muted transition hover:border-primary hover:text-primary"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-[1280px] px-5 py-16 sm:px-8 md:py-24">
-          <SectionHeading title="Client Feedback" />
-          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-            {testimonials.map((testimonial) => (
-              <article
-                key={testimonial.name}
-                className="rounded-lg border border-outline-soft bg-surface p-6 shadow-sm transition hover:shadow-md"
+        {/* ═══════════════════════════════════════════════════
+            TESTIMONIALS
+        ═══════════════════════════════════════════════════ */}
+        <section className="bg-surface-muted py-16 sm:py-20 lg:py-24">
+          <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+            <div className="mx-auto mb-12 max-w-xl text-center">
+              <p className="mb-2 text-xs font-extrabold uppercase tracking-widest text-primary">Testimonials</p>
+              <h2 className="font-display text-3xl font-extrabold text-on-surface sm:text-4xl">
+                Creators love the results
+              </h2>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {testimonials.map((t) => (
+                <article
+                  key={t.name}
+                  className="rounded-2xl border border-outline-soft bg-surface p-5 shadow-sm transition hover:shadow-md sm:p-6"
+                >
+                  <StarRating count={t.stars} />
+                  <p className="mt-4 text-sm italic leading-7 text-muted">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="mt-5 flex items-center gap-3 border-t border-outline-soft pt-4">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-green text-sm font-extrabold text-primary">
+                      {t.name[0]}
+                    </span>
+                    <div>
+                      <p className="text-sm font-extrabold text-on-surface">{t.name}</p>
+                      <p className="text-xs text-muted">{t.role}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+            FINAL CTA BANNER
+        ═══════════════════════════════════════════════════ */}
+        <section className="relative overflow-hidden bg-primary py-16 sm:py-20">
+          {/* Radial glow */}
+          <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 80% at 50% 50%, rgba(255,255,255,0.07) 0%, transparent 70%)" }} />
+          <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
+            <p className="text-xs font-extrabold uppercase tracking-widest text-white/60">Start Now</p>
+            <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
+              Your product deserves a cinematic spotlight.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-white/70">
+              Upload one photo and get a cinema-grade AI video prompt in seconds.
+              No sign-up. No credit card. Completely free to start.
+            </p>
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Link
+                href="/generate/generate"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-8 py-3.5 text-sm font-extrabold text-primary shadow-lg transition hover:bg-surface-green active:scale-[0.98] sm:w-auto"
               >
-                <div className="mb-5 grid h-12 w-12 place-items-center rounded-lg bg-surface-green text-primary">
-                  <Icon name="person" size={22} />
-                </div>
-                <h3 className="font-display font-bold text-on-surface">{testimonial.name}</h3>
-                <p className="mt-3 text-sm italic leading-6 text-muted">
-                  &quot;{testimonial.quote}&quot;
-                </p>
-              </article>
-            ))}
+                <Icon name="auto_awesome" size={18} filled />
+                Generate My Free Prompt
+              </Link>
+              <Link
+                href="/generate"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/30 px-8 py-3.5 text-sm font-bold text-white transition hover:border-white/60 hover:bg-white/10 sm:w-auto"
+              >
+                <Icon name="storefront" size={18} />
+                Browse Prompt Library
+              </Link>
+            </div>
           </div>
         </section>
       </main>
 
+      {/* ═══════════════════════════════════════════════════
+          FOOTER
+      ═══════════════════════════════════════════════════ */}
       <footer id="contact" className="border-t border-outline-soft bg-surface">
-        <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 py-12 sm:px-8 md:grid-cols-2">
-          <div>
-            <h2 className="font-display text-3xl font-extrabold text-primary">Let us help you.</h2>
-            <p className="mt-3 text-muted">Reach out for an exploratory conversation.</p>
-            <Link
-              href="mailto:hello@silencioorgs.com"
-              className="mt-6 inline-flex h-11 items-center rounded-lg border border-outline-soft px-5 font-bold text-on-surface transition hover:border-primary hover:text-primary"
-            >
-              Contact Us
-            </Link>
+        <div className="mx-auto w-full max-w-[1200px] px-4 py-10 sm:px-6">
+          <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+            {/* Brand */}
+            <div>
+              <Link href="/" className="flex items-center gap-2.5">
+                <img src="/assets/logo.png" alt="Silencio Orgs Logo" className="h-9 w-9 object-contain" />
+                <span className="font-display text-lg font-extrabold text-on-surface">Silencio Orgs</span>
+              </Link>
+              <p className="mt-3 max-w-xs text-sm leading-6 text-muted">
+                AI-powered prompt generation for TikTok creators, affiliates, and e-commerce brands.
+              </p>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-wrap gap-8 text-sm">
+              <div className="space-y-3">
+                <p className="font-extrabold uppercase tracking-widest text-xs text-muted">Product</p>
+                {[
+                  { href: "/generate/generate", label: "Generate Prompt" },
+                  { href: "/generate", label: "Prompt Library" },
+                ].map((l) => (
+                  <Link key={l.label} href={l.href} className="block text-muted transition hover:text-primary">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+              <div className="space-y-3">
+                <p className="font-extrabold uppercase tracking-widest text-xs text-muted">Company</p>
+                {[
+                  { href: "mailto:hello@silencioorgs.com", label: "Contact Us" },
+                  { href: "/login", label: "Privacy Policy" },
+                  { href: "/login", label: "Terms of Service" },
+                ].map((l) => (
+                  <Link key={l.label} href={l.href} className="block text-muted transition hover:text-primary">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="grid gap-4 md:justify-items-end">
-            <a className="inline-flex items-center gap-3 text-muted hover:text-primary" href="tel:+10123456789">
-              <Icon name="call" size={20} />
-              (012) 345-6789
-            </a>
-            <a
-              className="inline-flex items-center gap-3 text-muted hover:text-primary"
-              href="mailto:hello@silencioorgs.com"
-            >
-              <Icon name="mail" size={20} />
-              hello@silencioorgs.com
-            </a>
-          </div>
-          <div className="border-t border-outline-soft pt-6 text-sm text-muted md:col-span-2 md:flex md:items-center md:justify-between">
-            <p>2026 Silencio Orgs. Built for TikTok AI creators.</p>
-            <div className="mt-4 flex flex-wrap gap-5 md:mt-0">
-              <Link href="/login" className="hover:text-primary">
-                Privacy Policy
-              </Link>
-              <Link href="/login" className="hover:text-primary">
-                Terms of Service
-              </Link>
-              <Link href="/dashboard" className="hover:text-primary">
-                Creator Support
-              </Link>
+
+          {/* Bottom bar */}
+          <div className="mt-10 flex flex-col gap-2 border-t border-outline-soft pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2026 Silencio Orgs. Built for TikTok AI creators.</p>
+            <div className="flex items-center gap-4">
+              <a href="tel:+10123456789" className="flex items-center gap-1.5 hover:text-primary transition">
+                <Icon name="call" size={14} />
+                (012) 345-6789
+              </a>
+              <a href="mailto:hello@silencioorgs.com" className="flex items-center gap-1.5 hover:text-primary transition">
+                <Icon name="mail" size={14} />
+                hello@silencioorgs.com
+              </a>
             </div>
           </div>
         </div>
