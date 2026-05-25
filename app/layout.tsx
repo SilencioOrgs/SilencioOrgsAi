@@ -13,6 +13,8 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const googleAdSenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT;
+
 export const metadata: Metadata = {
   title: "Silencio Orgs",
   description: "Prompt packs and content systems for TikTok AI affiliates.",
@@ -35,6 +37,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
           rel="stylesheet"
         />
+        {googleAdSenseClient && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdSenseClient}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className="min-h-full bg-background text-on-surface">{children}</body>
     </html>

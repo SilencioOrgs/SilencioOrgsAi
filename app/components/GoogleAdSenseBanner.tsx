@@ -1,6 +1,5 @@
 "use client";
 
-import Script from "next/script";
 import { useEffect } from "react";
 
 declare global {
@@ -41,14 +40,6 @@ export default function GoogleAdSenseBanner({
           Sponsored Advertisement
         </span>
         <div className="flex min-h-[90px] w-full items-center justify-center overflow-hidden rounded-xl border border-outline-soft bg-surface text-[10px] uppercase tracking-widest text-muted/40 shadow-inner">
-          {hasClient && (
-            <Script
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
-              crossOrigin="anonymous"
-              strategy="afterInteractive"
-            />
-          )}
           {hasAdUnit ? (
             <>
               <ins
